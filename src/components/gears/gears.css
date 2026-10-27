@@ -1,0 +1,18 @@
+/* Theme a gear drawing by setting these on any ancestor. */
+.gears {
+  --_stroke: var(--gear-stroke, currentColor);
+  --_fill: var(--gear-fill, transparent);
+  --_acc: var(--gear-accent, #2a47a3);
+  --_jewel: var(--gear-jewel, #b2323f);
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.gears .g-fill { fill: var(--_fill); stroke: var(--_stroke); stroke-linejoin: round; }
+.gears .g-mute { fill: none; stroke: var(--_stroke); opacity: 0.5; }
+.gears .g-acc { fill: none; stroke: var(--_acc); stroke-linecap: round; }
+.gears .g-accf { fill: var(--_fill); stroke: var(--_acc); }
+.gears .g-jewel { fill: var(--_jewel); stroke: var(--_stroke); }
+

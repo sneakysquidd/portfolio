@@ -1,0 +1,322 @@
+.L-move {
+  --blue: #2a47a3;
+  --white: #f2f5ff;
+  --paper: #f3f5f9;
+  --ink: #141b2b;
+  --ink-2: #566079;
+  --rule: #d5dbe7;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  display: grid;
+  grid-template-columns: minmax(320px, 44%) minmax(0, 1fr);
+}
+
+.mv-left {
+  background: var(--blue);
+  color: var(--white);
+}
+
+.mv-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 32px;
+  padding: clamp(24px, 4vw, 56px);
+}
+
+.mv-name {
+  display: grid;
+  font-size: clamp(3rem, 6.6vw, 6.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+
+.mv-label {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mv-main {
+  max-width: 760px;
+  padding: clamp(24px, 4vw, 56px) max(20px, 5vw);
+}
+
+.mv-label {
+  color: var(--blue);
+}
+
+.mv-summary {
+  margin-top: 16px;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 300;
+  line-height: 1.35;
+  max-width: 34ch;
+}
+
+.L-move .rs-section { margin-top: 56px; }
+
+.L-move .rs-h {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.L-move .rs-list,
+.L-move .rs-tags {
+  list-style: none;
+}
+
+/* Spec-sheet rows: description left, dates right. */
+.L-move .rs-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 24px;
+  padding: 16px 0;
+  border-bottom: 1px dotted var(--ink-2);
+}
+
+.L-move .rs-when {
+  order: 2;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.L-move .rs-body { order: 1; }
+.L-move .rs-title { font-weight: 500; font-size: 1.15rem; }
+.L-move .rs-meta { font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); }
+.L-move .rs-points { margin-top: 8px; padding-left: 1.1em; }
+.L-move .rs-desc { margin-top: 6px; }
+
+.L-move .rs-tags {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  border-left: 1px solid var(--rule);
+}
+
+.L-move .rs-tags li {
+  padding: 10px 12px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--f-mono);
+  font-size: 12.5px;
+}
+
+@media (max-width: 900px) {
+  .L-move { grid-template-columns: minmax(0, 1fr); }
+  .mv-sticky { position: static; min-height: auto; }
+}
+
+/* ---------- Left panel details ---------- */
+.L-wound .mv-left {
+  --gear-stroke: rgba(242, 245, 255, 0.75);
+  --gear-fill: var(--blue);
+  --gear-accent: #ffb400;
+  --gear-jewel: #ff7a85;
+  /* clip, not hidden: hidden would make this a scroll container and break the sticky panel */
+  overflow: clip;
+}
+
+/* The left column fits exactly one screen: name on top, portrait and details below. */
+.L-wound .wd-left {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(24px, 4vh, 48px);
+  isolation: isolate;
+}
+
+.L-wound .mv-name {
+  font-size: clamp(3rem, min(6.4vw, 10vh), 6.4rem);
+}
+
+/* Portrait beside the details, both sitting on the bottom of the row.
+   The portrait is as wide as 64% of the row or as tall as the row allows at 4:5, whichever is smaller. */
+.wd-body {
+  container-type: size;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(16px, 2.5vw, 32px);
+  min-height: 0;
+}
+
+/* --photo-scale shrinks the portrait from the largest size that fits (1 = fill the row). */
+.wd-left {
+  --photo-scale: 0.9;
+}
+
+.wd-portrait {
+  flex: none;
+  width: calc(min(64cqw, 100cqh * 0.8) * var(--photo-scale));
+}
+
+.wd-side {
+  flex: 1;
+  min-width: 0;
+}
+
+.L-wound .portrait {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: color-mix(in srgb, var(--white) 6%, var(--blue));
+  border: 1px solid color-mix(in srgb, var(--white) 70%, transparent);
+  color: var(--white);
+}
+
+/* Keep the face in frame however the square photo is cropped */
+.L-wound .portrait img {
+  object-position: 50% 30%;
+}
+
+/* ---------- Gears and layering ---------- */
+
+/* Placed relative to the portrait (see usePortraitBox). Values are in units of the portrait's
+   width, so they hold at any screen size:
+     --g-x, --g-y  top-left of the train, from the portrait's top-left corner
+     --g-size      train width
+     --g-tilt      clockwise rotation about the train's left edge */
+.wv-corner {
+  --g-x: 0.56;
+  --g-y: -1.08;
+  --g-size: 1.7;
+  --g-tilt: 44deg;
+  --g-opacity: 0.7;
+}
+
+.wv-gears {
+  position: absolute;
+  z-index: 1;
+  /* One gear unit = the portrait's full-size width, so shrinking the photo doesn't shrink the gears */
+  --gu: calc(var(--pw, 300px) / var(--photo-scale));
+  left: calc(var(--px, 0px) + var(--gu) * var(--g-x));
+  /* The photo sits on the bottom of its row, so the full-size photo's top would be 1.25 × (gu − pw) higher.
+     Anchor there, so the gears stay where they were tuned whatever --photo-scale is. */
+  top: calc(var(--py, 300px) - (var(--gu) - var(--pw, 300px)) * 1.25 + var(--gu) * var(--g-y));
+  width: calc(var(--gu) * var(--g-size));
+  transform: rotate(var(--g-tilt));
+  transform-origin: 0 50%;
+  opacity: var(--g-opacity);
+  pointer-events: none;
+}
+
+/* Gears sit behind both the name and the photo */
+.wv-corner .mv-name,
+.wv-corner .wd-body {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- Details list ---------- */
+.wd-meta {
+  display: grid;
+  border-top: 1px solid color-mix(in srgb, var(--white) 35%, transparent);
+}
+
+.wd-meta div {
+  display: grid;
+  gap: 2px;
+  padding: 9px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--white) 18%, transparent);
+  min-width: 0;
+}
+
+.wd-meta dt {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.wd-meta dd {
+  overflow-wrap: anywhere;
+}
+
+.wd-elsewhere {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+}
+
+.wd-left a {
+  color: inherit;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--white) 45%, transparent);
+}
+
+.wd-left a:hover {
+  text-decoration-color: var(--white);
+}
+
+.wd-email {
+  user-select: all;
+}
+
+/* ---------- Résumé details ---------- */
+
+/* Section headings carry a small escape wheel that steps one tooth per reveal. */
+.L-wound .rs-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.L-wound .rs-h::before {
+  content: '';
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--esc-icon) center / contain no-repeat;
+  transform: rotate(calc(var(--esc-steps, 0) * 24deg));
+  transition: transform 0.2s cubic-bezier(0.3, 1.7, 0.5, 1);
+}
+
+/* Entries tick in like a released tooth: a short swing, then lock. */
+.L-wound .rs-entry,
+.L-wound .rs-tags li {
+  opacity: 0;
+  transform: rotate(-2.5deg) translateY(14px);
+  transform-origin: 0 0;
+  transition: opacity 0.2s ease, transform 0.32s cubic-bezier(0.3, 1.7, 0.5, 1);
+}
+
+.L-wound .rs-entry.is-in,
+.L-wound .rs-tags li.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .L-wound .rs-entry,
+  .L-wound .rs-tags li {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Stacked (narrow) ---------- */
+/* The column no longer has a fixed height, so size things by width instead. */
+@media (max-width: 900px) {
+  .L-wound .wd-left { position: relative; height: auto; }
+  .L-wound .mv-name { font-size: clamp(3rem, 10vw, 5.5rem); }
+  .wd-body { container-type: normal; }
+  .wd-portrait { width: calc(min(55%, 320px) * var(--photo-scale)); }
+}
+
+@media (max-width: 520px) {
+  .wd-body { flex-direction: column; align-items: stretch; }
+  .wd-portrait { width: calc(min(100%, 280px) * var(--photo-scale)); }
+}
