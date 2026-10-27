@@ -75,7 +75,6 @@ export const certifications = [
     name: 'Machine Learning Specialization',
     issuer: 'DeepLearning.AI · Stanford University',
     issued: 'Jan 2024',
-    id: 'N4S3VDM3WR28',
   },
 ]
 
