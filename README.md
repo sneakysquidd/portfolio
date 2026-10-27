@@ -1,19 +1,17 @@
 <div align="center">
 
 ```
- ░░░░░░╗  ▒▒▒▒▒╗ ▓▓╗   ▓▓╗██╗███╗   ██╗
-░░╔════╝ ▒▒╔══▒▒╗▓▓║   ▓▓║██║████╗  ██║
-░░║  ░░░╗▒▒▒▒▒▒▒║▓▓║   ▓▓║██║██╔██╗ ██║
-░░║   ░░║▒▒╔══▒▒║╚▓▓╗ ▓▓╔╝██║██║╚██╗██║
-╚░░░░░░╔╝▒▒║  ▒▒║ ╚▓▓▓▓╔╝ ██║██║ ╚████║
- ╚═════╝ ╚═╝  ╚═╝  ╚═══╝  ╚═╝╚═╝  ╚═══╝
+   ______            _
+  / ____/___ __   __(_)___
+ / / __/ __ `/ | / / / __ \
+/ /_/ / /_/ /| |/ / / / / /
+\____/\__,_/ |___/_/_/ /_/
 
-████████╗██╗  ██╗ ▓▓▓▓▓▓╗ ▓▓▓╗   ▓▓▓╗ ▒▒▒▒▒╗ ░░░░░░░╗
-╚══██╔══╝██║  ██║▓▓╔═══▓▓╗▓▓▓▓╗ ▓▓▓▓║▒▒╔══▒▒╗░░╔════╝
-   ██║   ███████║▓▓║   ▓▓║▓▓╔▓▓▓▓╔▓▓║▒▒▒▒▒▒▒║░░░░░░░╗
-   ██║   ██╔══██║▓▓║   ▓▓║▓▓║╚▓▓╔╝▓▓║▒▒╔══▒▒║╚════░░║
-   ██║   ██║  ██║╚▓▓▓▓▓▓╔╝▓▓║ ╚═╝ ▓▓║▒▒║  ▒▒║░░░░░░░║
-   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝
+  ________
+ /_  __/ /_  ____  ____ ___  ____ ______
+  / / / __ \/ __ \/ __ `__ \/ __ `/ ___/
+ / / / / / / /_/ / / / / / / /_/ (__  )
+/_/ /_/ /_/\____/_/ /_/ /_/\__,_/____/
 ```
 
 **Data Scientist & Software Developer** · Salt Lake City, Utah
@@ -31,7 +29,7 @@
 
 ### The name has weight, not color
 
-The name is set in a variable font, and each letter carries its own weight. At rest, **Gavin** builds from light to heavy and **Thomas** falls from heavy to light, so the two lines meet in a diagonal of thick strokes. The ASCII above is shaded the same way.
+The name is set in a variable font, and each letter carries its own weight. At rest, **Gavin** builds from light to heavy and **Thomas** falls from heavy to light, so the two lines meet in a diagonal of thick strokes.
 
 Move the pointer onto the name and the ramp clears to an even weight. Then the letters nearest the cursor thicken as it passes, like ink pooling under a fingertip. Move away and the ramp settles back in.
 
