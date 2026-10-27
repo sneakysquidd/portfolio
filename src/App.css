@@ -320,3 +320,32 @@
   .wd-body { flex-direction: column; align-items: stretch; }
   .wd-portrait { width: calc(min(100%, 280px) * var(--photo-scale)); }
 }
+
+/* ---------- Pumpkin ---------- */
+.wd-pumpkin { margin-bottom: 14px; }
+
+/* ---------- Halloween mode ---------- */
+.L-move,
+.mv-left {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.L-move.is-halloween {
+  --blue: #17110d;
+  --white: #fff0dc;
+  --paper: #f7f1e9;
+  --ink: #1f150f;
+  --ink-2: #6e5b4c;
+  --rule: #e6dacb;
+}
+
+.is-halloween .mv-label,
+.is-halloween .rs-h {
+  color: #c4520c;
+}
+
+.L-wound.is-halloween .mv-left {
+  --gear-stroke: rgba(255, 138, 40, 0.85);
+  --gear-accent: #ffcf4a;
+  --gear-jewel: #ff7518;
+}

@@ -1,0 +1,71 @@
+.pumpkin {
+  --pk-size: 46px;
+  --pk-lit: #ff8a28;
+  --pk-glow: #ffcf4a;
+  flex: none;
+  display: inline-grid;
+  width: var(--pk-size);
+  height: var(--pk-size);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--white);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.3, 1.7, 0.5, 1), color 0.4s ease;
+}
+
+.pumpkin:hover { transform: rotate(-10deg) scale(1.06); }
+.pumpkin:active { transform: rotate(4deg) scale(0.96); }
+
+.pumpkin:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.pumpkin svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pk-stem {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pk-body { fill: currentColor; }
+
+/* The face is cut through the body to the plate behind */
+.pk-face > * {
+  fill: var(--blue);
+  transition: fill 0.3s ease;
+}
+
+.pumpkin[aria-pressed='true'] { color: var(--pk-lit); }
+
+.pumpkin[aria-pressed='true'] .pk-face {
+  filter: drop-shadow(0 0 3px var(--pk-lit));
+  animation: pk-flicker 2.6s infinite;
+}
+
+.pumpkin[aria-pressed='true'] .pk-face > * { fill: var(--pk-glow); }
+
+@keyframes pk-flicker {
+  0%, 100% { opacity: 1; }
+  18% { opacity: 0.8; }
+  21% { opacity: 0.96; }
+  52% { opacity: 0.86; }
+  58% { opacity: 1; }
+  79% { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pumpkin,
+  .pumpkin:hover,
+  .pumpkin:active { transform: none; transition: none; }
+  .pumpkin[aria-pressed='true'] .pk-face { animation: none; }
+}

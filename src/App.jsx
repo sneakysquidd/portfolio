@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Portrait from './components/Portrait'
+import Pumpkin from './components/Pumpkin'
 import Resume from './components/Resume'
 import GearTrain from './components/gears/GearTrain'
 import { circleD, clubPath } from './components/gears/geometry'
@@ -7,12 +8,12 @@ import NameMotion from './components/names/NameMotion'
 import { profile } from './content/resume'
 import './App.css'
 
-const BLUE = '#2a47a3'
-
 // Small escape wheel used as the section-heading icon. It advances one tooth per entry revealed.
-const ESC_ICON = `url("data:image/svg+xml,${encodeURIComponent(
-  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-16 -16 32 32'><path d='${clubPath(15, 14.5, 10.5)}${circleD(6)}' fill='none' stroke='${BLUE}' stroke-width='1.1' fill-rule='evenodd'/><circle r='2' fill='none' stroke='${BLUE}' stroke-width='1.1'/></svg>`,
+const escIcon = (color) => `url("data:image/svg+xml,${encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-16 -16 32 32'><path d='${clubPath(15, 14.5, 10.5)}${circleD(6)}' fill='none' stroke='${color}' stroke-width='1.1' fill-rule='evenodd'/><circle r='2' fill='none' stroke='${color}' stroke-width='1.1'/></svg>`,
 )}")`
+const ESC_ICON = escIcon('#2a47a3')
+const ESC_ICON_HALLOWEEN = escIcon('#c4520c')
 
 // Entries tick into place as they scroll into view; each one advances the heading wheels by a tooth.
 function useRevealTicks(rootRef) {
@@ -90,7 +91,7 @@ function Meta() {
 }
 
 // Gear size, tilt, position and opacity are set in App.css (.wv-gears).
-function Left() {
+function Left({ halloween, onToggle }) {
   const panel = useRef(null)
   const body = useRef(null)
   const portrait = useRef(null)
@@ -104,7 +105,10 @@ function Left() {
       </h1>
       <div ref={body} className="wd-body">
         <div ref={portrait} className="wd-portrait"><Portrait /></div>
-        <div className="wd-side"><Meta /></div>
+        <div className="wd-side">
+          <Pumpkin on={halloween} onToggle={onToggle} className="wd-pumpkin" />
+          <Meta />
+        </div>
       </div>
       <div className="wv-gears" aria-hidden="true"><GearTrain scrollFactor={0.5} /></div>
     </div>
@@ -114,10 +118,17 @@ function Left() {
 export default function App() {
   const rootRef = useRef(null)
   useRevealTicks(rootRef)
+  const [halloween, setHalloween] = useState(false)
 
   return (
-    <div className="L-move L-wound" ref={rootRef} style={{ '--esc-icon': ESC_ICON }}>
-      <aside className="mv-left"><Left /></aside>
+    <div
+      className={`L-move L-wound${halloween ? ' is-halloween' : ''}`}
+      ref={rootRef}
+      style={{ '--esc-icon': halloween ? ESC_ICON_HALLOWEEN : ESC_ICON }}
+    >
+      <aside className="mv-left">
+        <Left halloween={halloween} onToggle={() => setHalloween((h) => !h)} />
+      </aside>
 
       <main className="mv-main">
         <header>
