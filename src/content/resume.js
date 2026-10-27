@@ -11,7 +11,8 @@ export const profile = {
   summary:
     'I care about the details most people never see and the ones everyone feels. Every interface I build starts with design and ends with engineering I can stand behind.',
   links: [
-    { label: 'More', href: 'https://www.linkedin.com/in/gavin-thomas-821b341b0/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/gavin-thomas-821b341b0/' },
+    { label: 'GitHub', href: 'https://github.com/sneakysquidd/portfolio' },
   ],
 }
 
