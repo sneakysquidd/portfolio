@@ -3,12 +3,16 @@ import { circleD, clubPath, fx, gearPath } from './geometry'
 
 const spoke = (w, len) => `M${fx(-w / 2)} 0L${fx(-w / 2)} ${fx(-len)}L${fx(w / 2)} ${fx(-len)}L${fx(w / 2)} 0Z`
 
+// Pinion root radius, matching PinionArt's dedendum. A wheel's hub must stay inside it.
+export const pinionRoot = (N, m = 1) => m * (N / 2 - 1.25)
+
 // Wheel with crossings (spokes), so wheels underneath show through.
-export const WheelArt = memo(function WheelArt({ N, m = 1, spokes = 4, sw = 0.22 }) {
+// hub: radius override, for a wheel whose pinion would otherwise show the hub between its teeth.
+export const WheelArt = memo(function WheelArt({ N, m = 1, spokes = 4, sw = 0.22, hub: hubR }) {
   const rp = (m * N) / 2
   const rr = rp - 1.25 * m
   const ri = rr - Math.max(2, rp * 0.09)
-  const hub = Math.max(2.4, rp * 0.13)
+  const hub = hubR ?? Math.max(2.4, rp * 0.13)
   const w = Math.max(1.4, rp * 0.075)
   return (
     <g>
