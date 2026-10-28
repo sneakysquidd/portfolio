@@ -19,11 +19,11 @@
 
 The name is set in a variable font, and each letter carries its own weight. At rest, **Gavin** builds from light to heavy and **Thomas** falls from heavy to light, so the two lines meet in a diagonal of thick strokes.
 
-Move the pointer onto the name and the ramp clears to an even weight. Then the letters nearest the cursor thicken as it passes, like ink pooling under a fingertip. Move away and the ramp settles back in.
+Move the pointer onto the name and the ramp clears to an even weight. Then the letters nearest the cursor thicken as it passes. Move away and the ramp settles back in.
 
 ### The gears keep your time
 
-The gear train runs on the visitor's own clock. The center wheel turns once an hour, the fourth wheel once a minute, and the escape wheel ticks in beats with a brief stop at each one, not a smooth spin. Every tooth is generated in SVG from real gear geometry, so the wheels actually mesh.
+The center wheel turns once an hour, the fourth wheel once a minute, and the escape wheel ticks in beats with a brief stop at each one, not a smooth spin. Every tooth is generated in SVG from real gear geometry, so the wheels actually mesh.
 
 Scrolling winds the movement forward, and scrolling back runs it in reverse.
 
