@@ -1,19 +1,18 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Portrait from './components/Portrait'
-import Pumpkin from './components/Pumpkin'
 import Resume from './components/Resume'
 import GearTrain from './components/gears/GearTrain'
-import { circleD, clubPath } from './components/gears/geometry'
 import NameMotion from './components/names/NameMotion'
+import Pumpkin from './components/seasonal/Pumpkin'
+import Turkey from './components/seasonal/Turkey'
+import { ESC_ICON, ESC_ICON_HALLOWEEN, ESC_ICON_HARVEST, NAME_HUES, seasonFor } from './components/seasonal/seasons'
 import { profile } from './content/resume'
 import './App.css'
 
-// Small escape wheel used as the section-heading icon. It advances one tooth per entry revealed.
-const escIcon = (color) => `url("data:image/svg+xml,${encodeURIComponent(
-  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-16 -16 32 32'><path d='${clubPath(15, 14.5, 10.5)}${circleD(6)}' fill='none' stroke='${color}' stroke-width='1.1' fill-rule='evenodd'/><circle r='2' fill='none' stroke='${color}' stroke-width='1.1'/></svg>`,
-)}")`
-const ESC_ICON = escIcon('#2a47a3')
-const ESC_ICON_HALLOWEEN = escIcon('#c4520c')
+// Which holiday's toggle sits in the left panel, by today's date: 'halloween' (pumpkin), 'thanksgiving' (turkey) or null.
+const SEASON_BUTTON = seasonFor()
+
+const SEASON_ICONS = { halloween: ESC_ICON_HALLOWEEN, thanksgiving: ESC_ICON_HARVEST }
 
 // Entries tick into place as they scroll into view; each one advances the heading wheels by a tooth.
 function useRevealTicks(rootRef) {
@@ -90,8 +89,14 @@ function Meta() {
   )
 }
 
+function SeasonButton({ season, onToggle }) {
+  if (SEASON_BUTTON === 'halloween') return <Pumpkin on={season === 'halloween'} onToggle={onToggle} className="wd-season" />
+  if (SEASON_BUTTON === 'thanksgiving') return <Turkey on={season === 'thanksgiving'} onToggle={onToggle} className="wd-season" />
+  return null
+}
+
 // Gear size, tilt, position and opacity are set in App.css (.wv-gears).
-function Left({ halloween, onToggle }) {
+function Left({ season, onToggle, hues }) {
   const panel = useRef(null)
   const body = useRef(null)
   const portrait = useRef(null)
@@ -101,12 +106,12 @@ function Left({ halloween, onToggle }) {
     <div ref={panel} className="mv-sticky wd-left wv-corner">
       <h1 className="mv-name">
         {/* A fixed weight ramp; letters thicken near the pointer, and the ramp clears while it's on the name */}
-        <NameMotion lines={[profile.first, profile.last]} />
+        <NameMotion lines={[profile.first, profile.last]} hues={hues} />
       </h1>
       <div ref={body} className="wd-body">
         <div ref={portrait} className="wd-portrait"><Portrait /></div>
         <div className="wd-side">
-          <Pumpkin on={halloween} onToggle={onToggle} className="wd-pumpkin" />
+          <SeasonButton season={season} onToggle={onToggle} />
           <Meta />
         </div>
       </div>
@@ -118,16 +123,17 @@ function Left({ halloween, onToggle }) {
 export default function App() {
   const rootRef = useRef(null)
   useRevealTicks(rootRef)
-  const [halloween, setHalloween] = useState(false)
+  const [season, setSeason] = useState(null)
+  const hues = NAME_HUES[season] ?? NAME_HUES.default
 
   return (
     <div
-      className={`L-move L-wound${halloween ? ' is-halloween' : ''}`}
+      className={`L-move L-wound${season ? ` is-${season}` : ''}`}
       ref={rootRef}
-      style={{ '--esc-icon': halloween ? ESC_ICON_HALLOWEEN : ESC_ICON }}
+      style={{ '--esc-icon': SEASON_ICONS[season] ?? ESC_ICON }}
     >
       <aside className="mv-left">
-        <Left halloween={halloween} onToggle={() => setHalloween((h) => !h)} />
+        <Left season={season} onToggle={() => setSeason((s) => (s ? null : SEASON_BUTTON))} hues={hues} />
       </aside>
 
       <main className="mv-main">
@@ -136,7 +142,6 @@ export default function App() {
           <p className="mv-summary">{profile.summary}</p>
         </header>
         <Resume />
-      </main>
-    </div>
+      </main>    </div>
   )
 }

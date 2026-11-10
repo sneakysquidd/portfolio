@@ -321,8 +321,8 @@
   .wd-portrait { width: calc(min(100%, 280px) * var(--photo-scale)); }
 }
 
-/* ---------- Pumpkin ---------- */
-.wd-pumpkin { margin-bottom: 14px; }
+/* ---------- Seasonal toggle ---------- */
+.wd-season { margin-bottom: 14px; }
 
 /* ---------- Halloween mode ---------- */
 .L-move,
@@ -348,4 +348,26 @@
   --gear-stroke: rgba(255, 138, 40, 0.85);
   --gear-accent: #ffcf4a;
   --gear-jewel: #ff7518;
+}
+
+/* ---------- Thanksgiving mode ---------- */
+/* The blue ink turns to rust and the paper warms, like an old almanac. */
+.L-move.is-thanksgiving {
+  --blue: #7a3412;
+  --white: #fbf0dc;
+  --paper: #f4ead6;
+  --ink: #2b1d12;
+  --ink-2: #7a634d;
+  --rule: #e2d3b9;
+}
+
+.is-thanksgiving .mv-label,
+.is-thanksgiving .rs-h {
+  color: #a8441a;
+}
+
+.L-wound.is-thanksgiving .mv-left {
+  --gear-stroke: rgba(251, 225, 180, 0.75);
+  --gear-accent: #e8a33a;
+  --gear-jewel: #e0525a;
 }

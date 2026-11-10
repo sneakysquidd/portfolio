@@ -12,9 +12,10 @@ const REACH = 55 // px, spread of the pointer's bold
   The name as weight-animated letters, counted as one run across all lines.
   At rest each line holds a weight ramp, opposed line to line: the first builds light to heavy,
   the next heavy to light. As the pointer reaches the name the ramp clears to plain weight and
-  the letters nearest the pointer thicken instead.
+  the letters nearest the pointer thicken instead. Given `hues`, those letters also take on color,
+  cycling through the list letter by letter.
 */
-export default function NameMotion({ lines, className = '' }) {
+export default function NameMotion({ lines, hues = null, className = '' }) {
   const root = useRef(null)
   const weights = useRef([])
   const pointer = useRef(null)
@@ -65,6 +66,8 @@ export default function NameMotion({ lines, className = '' }) {
       const next = w + (goal - w) * k
       weights.current[i] = next
       el.style.fontWeight = Math.round(next)
+      const h = hues?.length && hover ? Math.round(hover[i] * 100) : 0
+      el.style.color = h ? `color-mix(in oklab, ${hues[i % hues.length]} ${h}%, currentColor)` : ''
     })
   })
 

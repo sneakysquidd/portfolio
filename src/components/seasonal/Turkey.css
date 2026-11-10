@@ -1,0 +1,69 @@
+/* Shares its size and motion with the pumpkin so the two toggles feel like one family. */
+.turkey {
+  --tk-size: 46px;
+  /* Folded tail: the feathers stack behind the body, just peeking over the head. */
+  --fan: 0.1;
+  flex: none;
+  display: inline-grid;
+  width: var(--tk-size);
+  height: var(--tk-size);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--white);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.3, 1.7, 0.5, 1);
+}
+
+/* Hovering the folded turkey starts to fan the tail, hinting at the click. */
+.turkey:hover { --fan: 0.35; }
+.turkey[aria-pressed='true'] { --fan: 1; }
+
+.turkey:hover { transform: rotate(-8deg) scale(1.06); }
+.turkey:active { transform: rotate(4deg) scale(0.96); }
+
+.turkey:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.turkey svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.tk-feather {
+  fill: currentColor;
+  stroke: var(--blue);
+  stroke-width: 1;
+  transform-box: view-box;
+  transform-origin: 24px 30px;
+  transform: rotate(calc(var(--a) * var(--fan)));
+  transition:
+    transform 0.32s cubic-bezier(0.3, 1.7, 0.5, 1) var(--d),
+    fill 0.4s ease var(--d);
+}
+
+.turkey[aria-pressed='true'] .tk-feather { fill: var(--c); }
+
+.tk-body { fill: currentColor; }
+.tk-hub { fill: none; stroke: var(--blue); stroke-width: 1.1; }
+.tk-eye { fill: var(--blue); }
+.tk-beak { fill: #e0952b; }
+.tk-wattle { fill: #c8312b; }
+
+.tk-feet {
+  fill: none;
+  stroke: #e0952b;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .turkey,
+  .turkey:hover,
+  .turkey:active { transform: none; transition: none; }
+  .tk-feather { transition: none; }
+}
