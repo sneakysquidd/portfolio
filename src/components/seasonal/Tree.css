@@ -1,0 +1,84 @@
+/* Shares its size and motion with the pumpkin and turkey so the toggles feel like one family. */
+.tree {
+  --tr-size: 46px;
+  --tr-gold: #ffd25e;
+  flex: none;
+  display: inline-grid;
+  width: var(--tr-size);
+  height: var(--tr-size);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--white);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.3, 1.7, 0.5, 1);
+}
+
+.tree:hover { transform: rotate(-8deg) scale(1.06); }
+.tree:active { transform: rotate(4deg) scale(0.96); }
+
+.tree:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.tree svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.tr-body {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+
+.tr-trunk { fill: currentColor; }
+
+/* Unlit, the bulbs are holes cut through to the plate, like the pumpkin's face. */
+.tr-bulb {
+  fill: var(--blue);
+  transition: fill 0.3s ease var(--d), filter 0.3s ease var(--d);
+}
+
+.tr-star {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  transition: fill 0.3s ease var(--d), stroke 0.3s ease var(--d), filter 0.3s ease var(--d);
+}
+
+/* Hovering the unlit tree half-lights the star, hinting at the click. */
+.tree:not([aria-pressed='true']):hover .tr-star {
+  fill: color-mix(in srgb, var(--tr-gold) 45%, transparent);
+}
+
+.tree[aria-pressed='true'] .tr-bulb {
+  fill: var(--c);
+  filter: drop-shadow(0 0 2px var(--c));
+  animation: tr-twinkle 2.8s ease-in-out var(--tw) infinite;
+}
+
+.tree[aria-pressed='true'] .tr-star {
+  fill: var(--tr-gold);
+  stroke: var(--tr-gold);
+  filter: drop-shadow(0 0 3px var(--tr-gold));
+}
+
+@keyframes tr-twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree,
+  .tree:hover,
+  .tree:active { transform: none; transition: none; }
+  .tr-bulb,
+  .tr-star { transition: none; }
+  .tree[aria-pressed='true'] .tr-bulb { animation: none; }
+}

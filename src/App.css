@@ -371,3 +371,30 @@
   --gear-accent: #e8a33a;
   --gear-jewel: #e0525a;
 }
+
+/* ---------- Christmas mode ---------- */
+/* A deep pine plate on cream paper, with cranberry headings and silver gears. */
+.L-move.is-christmas {
+  --blue: #173a2a;
+  --white: #f8f1e1;
+  --paper: #f6f2e8;
+  --ink: #17211b;
+  --ink-2: #5d6b60;
+  --rule: #dfe2d4;
+}
+
+.is-christmas .mv-label,
+.is-christmas .rs-h {
+  color: #b3262e;
+}
+
+.L-wound.is-christmas .mv-left {
+  --gear-stroke: rgba(240, 244, 250, 0.8);
+  --gear-accent: #ff6b74;
+  --gear-jewel: #5fd08a;
+}
+
+/* Room for the light strand above the name. */
+.L-wound.is-christmas .wd-left {
+  padding-top: max(clamp(24px, 4vw, 56px), 50px);
+}

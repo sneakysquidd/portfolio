@@ -3,16 +3,30 @@ import Portrait from './components/Portrait'
 import Resume from './components/Resume'
 import GearTrain from './components/gears/GearTrain'
 import NameMotion from './components/names/NameMotion'
+import LightStrand from './components/seasonal/LightStrand'
 import Pumpkin from './components/seasonal/Pumpkin'
+import Snow from './components/seasonal/Snow'
+import Tree from './components/seasonal/Tree'
 import Turkey from './components/seasonal/Turkey'
-import { ESC_ICON, ESC_ICON_HALLOWEEN, ESC_ICON_HARVEST, NAME_HUES, seasonFor } from './components/seasonal/seasons'
+import {
+  ESC_ICON,
+  ESC_ICON_HALLOWEEN,
+  ESC_ICON_HARVEST,
+  ESC_ICON_WREATH,
+  NAME_HUES,
+  seasonFor,
+} from './components/seasonal/seasons'
 import { profile } from './content/resume'
 import './App.css'
 
-// Which holiday's toggle sits in the left panel, by today's date: 'halloween' (pumpkin), 'thanksgiving' (turkey) or null.
+// Which holiday's toggle sits in the left panel, by today's date:
+// 'halloween' (pumpkin), 'thanksgiving' (turkey), 'christmas' (tree) or null.
 const SEASON_BUTTON = seasonFor()
 
-const SEASON_ICONS = { halloween: ESC_ICON_HALLOWEEN, thanksgiving: ESC_ICON_HARVEST }
+const SEASON_ICONS = { halloween: ESC_ICON_HALLOWEEN, thanksgiving: ESC_ICON_HARVEST, christmas: ESC_ICON_WREATH }
+
+// Extra beats per pixel scrolled, shared by the gears and the light strand so they stay in step.
+const SCROLL_FACTOR = 0.5
 
 // Entries tick into place as they scroll into view; each one advances the heading wheels by a tooth.
 function useRevealTicks(rootRef) {
@@ -92,6 +106,7 @@ function Meta() {
 function SeasonButton({ season, onToggle }) {
   if (SEASON_BUTTON === 'halloween') return <Pumpkin on={season === 'halloween'} onToggle={onToggle} className="wd-season" />
   if (SEASON_BUTTON === 'thanksgiving') return <Turkey on={season === 'thanksgiving'} onToggle={onToggle} className="wd-season" />
+  if (SEASON_BUTTON === 'christmas') return <Tree on={season === 'christmas'} onToggle={onToggle} className="wd-season" />
   return null
 }
 
@@ -101,6 +116,7 @@ function Left({ season, onToggle, hues }) {
   const body = useRef(null)
   const portrait = useRef(null)
   usePortraitBox(panel, body, portrait)
+  const christmas = season === 'christmas'
 
   return (
     <div ref={panel} className="mv-sticky wd-left wv-corner">
@@ -115,7 +131,9 @@ function Left({ season, onToggle, hues }) {
           <Meta />
         </div>
       </div>
-      <div className="wv-gears" aria-hidden="true"><GearTrain scrollFactor={0.5} /></div>
+      <div className="wv-gears" aria-hidden="true"><GearTrain scrollFactor={SCROLL_FACTOR} /></div>
+      {christmas && <Snow />}
+      {christmas && <LightStrand scrollFactor={SCROLL_FACTOR} />}
     </div>
   )
 }
@@ -142,6 +160,7 @@ export default function App() {
           <p className="mv-summary">{profile.summary}</p>
         </header>
         <Resume />
-      </main>    </div>
+      </main>
+    </div>
   )
 }
